@@ -1,0 +1,47 @@
+doctype 5
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    block title
+    link(rel="stylesheet", href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.2/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/css/layout.css")
+    link(rel="apple-touch-icon", sizes="57x57", href="/apple-touch-icon-57x57.png")
+    link(rel="apple-touch-icon", sizes="114x114", href="/apple-touch-icon-114x114.png")
+    link(rel="apple-touch-icon", sizes="72x72", href="/apple-touch-icon-72x72.png")
+    link(rel="apple-touch-icon", sizes="144x144", href="/apple-touch-icon-144x144.png")
+    link(rel="apple-touch-icon", sizes="120x120", href="/apple-touch-icon-120x120.png")
+    link(rel="apple-touch-icon", sizes="76x76", href="/apple-touch-icon-76x76.png")
+    link(rel="apple-touch-icon", sizes="152x152", href="/apple-touch-icon-152x152.png")
+    link(rel="icon", type="image/png", href="/favicon.ico", sizes="64x64")
+    block links
+  body
+    nav(class="navbar navbar-default navbar-fixed-top", role="navigation")
+      //- Brand and toggle get grouped for better mobile display
+      div(class="navbar-header")
+        button(type="button", class="navbar-toggle", data-toggle="collapse", data-target="#toolbar")
+          span(class="sr-only") Toggle navigation
+          span(class="icon-bar")
+          span(class="icon-bar")
+          span(class="icon-bar")
+        a(class="navbar-brand", href="/") qualia
+      div#toolbar(class="collapse navbar-collapse")
+        if user.roles
+          ul(class="nav navbar-nav")
+            li(class="dropdown")
+              a(href="#", class="dropdown-toggle", data-toggle="dropdown") <span class="glyphicon glyphicon-th" title="Apps"></span> <b class="caret"></b>
+              ul(class="dropdown-menu", role="menu")
+                each role in user.roles 
+                  if roles[role]
+                    li
+                      a(href='/'+role)= roles[role].name
+        block toolbar
+        ul#appbar(class="nav navbar-nav navbar-right")
+          li
+            a(href="/logout") logout
+        
+    block body
+    
+    footer(class="slot-footer")
+      &copy; 2014 David Sewell
+          
+    block scripts

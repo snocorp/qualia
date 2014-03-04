@@ -1,0 +1,24 @@
+extends ../layout
+block title
+  title qualia - Users
+block body
+  div(class="container", ng-controller="AppController")
+    div(class="page-header")
+      h1 Users
+    div
+      table(class="table")
+        thead
+          tr
+            th Username
+            th Organization
+            th Roles
+        tbody
+          tr(ng-repeat="user in users")
+            td(ng-bind="user.username")
+            td(ng-bind="user.org")
+            td
+              ul
+                li(ng-repeat="role in user.roles")
+                  span(ng-bind="role")
+block scripts
+  script(data-main="/js/admin/users", src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js")

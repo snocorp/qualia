@@ -1,0 +1,7 @@
+/core/test_output.log
+
+/core/.sass-cache
+/core/config.json
+/core/node_modules
+/core/server/public/
+/tmp

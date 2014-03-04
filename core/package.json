@@ -1,0 +1,40 @@
+{
+  "name": "qualia-core",
+  "preferGlobal": false,
+  "version": "0.1.0",
+  "description": "An application for creating and tracking test charters.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snocorp/qualia.git"
+  },
+  "dependencies": {
+    "lodash": "~2.4.0",
+    "when": "~2.6.0",
+    "request": "~2.27.0",
+    "express": "~3.4.4",
+    "connect-flash": "~0.1.1",
+    "passport": "0.1.17",
+    "passport-local": "~0.1.6",
+    "password-hash": "~1.2.1",
+    "jade": "~0.35.0",
+    "nano": "~4.2.1",
+    "winston": "~0.7.2"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-compass": "~0.6.0",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-mocha-cli": "~1.4.0",
+    "nock": "~0.27.1",
+    "proxyquire": "~0.5.2",
+    "chai-connect-middleware": "~0.3.1",
+    "chai": "~1.8.1"
+  },
+  "readmeFilename": "README.md",
+  "engines": {
+    "node": ">=0.10"
+  }
+}
