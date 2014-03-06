@@ -1,14 +1,22 @@
 /*jslint node: true*/
-/*globals describe, it*/
+/*globals describe, it, beforeEach, afterEach*/
 var rootDir = "../../../";
+
+var testutil = require('../../testutil');
 
 var assert = require("assert");
 var nock = require("nock");
+var winston = require('winston');
+
 var datalog = require(rootDir + "logic/datalog");
 var orgs = require(rootDir + "logic/orgs");
 
 describe('Orgs', function () {
     'use strict';
+
+    beforeEach(function () {
+        testutil.setupLogging(winston);
+    });
     
     it('should handle the create_org event', function () {
         var insertOrg = nock('http://localhost:5984')
@@ -30,5 +38,9 @@ describe('Orgs', function () {
     
     it('should have a design', function () {
         assert.ok(orgs.design);
+    });
+    
+    afterEach(function () {
+        testutil.tearDownLogging(winston);
     });
 });

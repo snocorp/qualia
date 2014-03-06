@@ -1,9 +1,13 @@
 /*jslint node: true*/
-/*globals describe, it*/
+/*globals describe, it, xit, beforeEach, afterEach*/
 var rootDir = "../../../";
+
+var testutil = require('../../testutil');
 
 var assert = require("assert");
 var proxyquire =  require('proxyquire').noCallThru();
+
+var winston = require('winston');
 
 var configJson = {
     "server_host": "qualia.ca",
@@ -18,6 +22,10 @@ var configExtended = proxyquire(rootDir + "logic/config", {
 
 describe('Config', function () {
     'use strict';
+
+    beforeEach(function () {
+        testutil.setupLogging(winston);
+    });
     
     it('should extend the default properties when config provided', function () {
         assert.equal('qualia.ca', configExtended.server_host);
@@ -27,5 +35,9 @@ describe('Config', function () {
     it('should use the default properties when no config provided', function () {
         assert.equal('localhost', config.server_host);
         assert.equal(undefined, config.new_parm);
+    });
+    
+    afterEach(function () {
+        testutil.tearDownLogging(winston);
     });
 });

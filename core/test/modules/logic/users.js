@@ -1,27 +1,30 @@
 /*jslint node: true*/
-/*globals beforeEach, describe, it, xit*/
+/*globals describe, it, beforeEach, afterEach*/
 var rootDir = "../../../";
 
 var assert = require("assert");
 var nock = require("nock");
 var chai = require('chai');
+var winston = require('winston');
 var passport = require('passport');
 var passwordHash = require('password-hash');
 
 chai.use(require('chai-connect-middleware'));
 
+var testutil = require('../../testutil');
+
 var datalog = require(rootDir + "logic/datalog");
 var users = require(rootDir + "logic/users");
 var scope;
 
-beforeEach(function () {
-    'use strict';
-    
-    scope = nock('http://localhost:5984');
-});
-
 describe('Users', function () {
     'use strict';
+
+    beforeEach(function () {
+        testutil.setupLogging(winston);
+    
+        scope = nock('http://localhost:5984');
+    });
     
     it('should handle the create_user event', function () {
         var insertUser = scope
@@ -232,5 +235,9 @@ describe('Users', function () {
                 })
                 .dispatch();
         });
+    });
+    
+    afterEach(function () {
+        testutil.tearDownLogging(winston);
     });
 });

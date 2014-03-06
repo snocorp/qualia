@@ -61,7 +61,8 @@ function resetDatabase() {
 
 function initializeData() {
     'use strict';
-    var db, data;
+    var db,
+        deferred = when.defer();
                 
     winston.info('database ' + config.couchdb_database + ' created!');
 
@@ -71,7 +72,7 @@ function initializeData() {
 
     requestPassword()
         .then(function (password) {
-            data = datalog.begin();
+            var data = datalog.begin();
             data.create('user', {
                 username: 'admin',
                 password: password,
@@ -82,7 +83,11 @@ function initializeData() {
                 name: 'admin'
             });
             data.commit();
+            
+            deferred.resolve();
         });
+
+    return deferred.promise;
 }
 
 
