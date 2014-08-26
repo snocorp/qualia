@@ -2,10 +2,18 @@ extends ../layout
 block title
   title qualia - Organizations
 block body
-  div(class="container")
-    div(class="jumbotron")
-      h1 TODO
-      p Organization admin...
+  div(class="container", ng-controller="AppController")
+    div(class="page-header")
+      h1 Organizations
+    div
+      table(class="table")
+        thead
+          tr
+            th Id
+            th Name
+        tbody
+          tr(ng-repeat="org in orgs")
+            td(ng-bind="org.id")
+            td(ng-bind="org.name")
 block scripts
-  script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
-  script(src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.2/js/bootstrap.min.js")
+  script(data-main="/js/admin/orgs", src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js")

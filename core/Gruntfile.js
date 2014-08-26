@@ -5,6 +5,12 @@ var uglifyFiles = {
         'server/src/js/admin/users/controllers.js',
         'server/src/js/admin/users/AppController.js',
         'server/src/js/admin/users/bootstrap.js'
+    ],
+    'server/public/js/admin/orgs.js': [
+        'server/src/js/admin/orgs/app.js',
+        'server/src/js/admin/orgs/controllers.js',
+        'server/src/js/admin/orgs/AppController.js',
+        'server/src/js/admin/orgs/bootstrap.js'
     ]
 };
 

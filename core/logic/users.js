@@ -28,7 +28,7 @@ var design = {
 };
 
 /**
- * Looks up a use by id.
+ * Looks up a user by id.
  *
  * @param {string} id - The user id
  */

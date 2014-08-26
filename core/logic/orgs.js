@@ -11,6 +11,19 @@ var passwordHash = require('password-hash');
 
 var db = nano.use(config.couchdb_database);
 
+var design = {
+    "_id": "_design/org",
+    "language": "javascript",
+    "views": {
+        "all": {
+            "map": "function(doc) { if (doc.entity_type == 'org')  emit(doc._id, doc) }"
+        },
+        "by_name": {
+            "map": "function(doc) { if (doc.entity_type == 'org')  emit(doc.name, doc) }"
+        }
+    }
+};
+
 
 /**
  * Retrieves an organization by its id.
@@ -55,6 +68,41 @@ function orgByName(name) {
     return deferred.promise;
 }
 
+
+/**
+ * Returns the list of organizations available to the given user.
+ */
+function getOrgs(user) {
+    'use strict';
+    
+    var deferred = when.defer();
+    if (user.roles && lodash.contains(user.roles, 'admin/orgs')) {
+        db.view('org', 'all', null,
+            function (err, body) {
+                var i,
+                    filter,
+                    orgs;
+                
+                orgs = lodash.map(body.rows, function (o) { return o.value; });
+                
+                //if the user is not in the admin org
+                if (user.org !== 'admin') {
+                    orgs = lodash.filter(orgs, function (org) {
+                        //return only if the organization matches
+                        return org.id === user.org;
+                    });
+                }
+                
+                deferred.resolve(orgs);
+            });
+    } else {
+        deferred.resolve([]);
+    }
+    
+    return deferred.promise;
+}
+
+
 function createOrg(org) {
     'use strict';
     winston.info('Creating org');
@@ -76,15 +124,7 @@ function createOrg(org) {
 datalog.on('create_org', createOrg);
 
 //EXPORTS
-module.exports.design = {
-    "_id": "_design/org",
-    "language": "javascript",
-    "views": {
-        "all": {
-            "map": "function(doc) { if (doc.entity_type == 'org')  emit(doc._id, doc) }"
-        },
-        "by_name": {
-            "map": "function(doc) { if (doc.entity_type == 'org')  emit(doc.name, doc) }"
-        }
-    }
+module.exports = {
+    "design": design,
+    "getOrgs": getOrgs
 };

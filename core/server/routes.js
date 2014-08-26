@@ -2,6 +2,8 @@
 
 var roles = require('../logic/roles').roles;
 var users = require('../logic/users');
+var orgs = require('../logic/orgs');
+
 var lodash = require('lodash');
 
 /**
@@ -191,11 +193,36 @@ var getUsers =
             });
     };
 
+/**
+ * API route for returning the list of organizations.
+ *
+ * @param req The request
+ * @param res The response
+ */
+var getOrgs =
+    function (req, res) {
+        'use strict';
+
+        restrictUser(req, res,
+            function (req, res) {
+                orgs.getOrgs(req.user).then(function (orgs) {
+                    res.set('Content-Type', 'application/json');
+                    res.send({"content": orgs});
+                });
+            },
+            function (req, res) {
+                jsonError(req, res, 401, {
+                    "errors": ["Not authorized to view this resource"]
+                });
+            });
+    };
+
 //EXPORTS
 module.exports = {
     renderIndex: renderIndex,
     renderAdminUsers: renderAdminUsers,
     renderAdminOrgs: renderAdminOrgs,
     renderError: renderError,
-    getUsers: getUsers
+    getUsers: getUsers,
+    getOrgs: getOrgs
 };

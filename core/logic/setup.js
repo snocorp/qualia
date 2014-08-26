@@ -80,7 +80,8 @@ function initializeData() {
                 org: 'admin'
             });
             data.create('org', {
-                name: 'admin'
+                id: 'admin',
+                name: 'Administration'
             });
             data.commit();
             
